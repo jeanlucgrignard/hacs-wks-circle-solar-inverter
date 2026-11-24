@@ -1,6 +1,6 @@
 {
-  "domain": "voltronic_solar_inverter",
-  "name": "Voltronic Solar Inverter",
+  "domain": "wks_circle_solar_inverter",
+  "name": "WKS Circle Solar Inverter",
   "codeowners": ["@SergeyAnokhin"],
   "config_flow": true,
   "dependencies": [],
