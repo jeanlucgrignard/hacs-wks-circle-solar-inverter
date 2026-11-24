@@ -272,7 +272,7 @@ CLOCK_YEARS: Final = (2016, 2099)  # the LCD takes 16..99
 
 
 def set_clock(moment: datetime) -> WriteCommand:
-    """^S???DAT<yymmddhhmmss>: set the inverter clock (local time, three literal "?").
+    """DAT<yymmddhhmmss>: set the inverter clock (local time, three literal "?").
 
     Same frame as the service tool and the Solar of Things dongle; the schedules
     (P46-P49) follow this clock. Read back through HGEN (minute resolution).
@@ -282,4 +282,4 @@ def set_clock(moment: datetime) -> WriteCommand:
     low, high = CLOCK_YEARS
     if not low <= moment.year <= high:
         raise InvalidCommandError(f"clock year {moment.year} is outside {low}..{high}")
-    return WriteCommand(f"^S???DAT{moment:%y%m%d%H%M%S}")
+    return WriteCommand(f"DAT{moment:%y%m%d%H%M%S}")
