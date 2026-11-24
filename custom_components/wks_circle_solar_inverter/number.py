@@ -98,24 +98,7 @@ async def async_setup_entry(
     data = entry.runtime_data
     identity = data.identity
     descriptions: list[VoltronicNumberDescription] = []
-    if identity.charging_current_options:
-        descriptions.append(
-            _current_description(
-                "max_charging_current",
-                identity.charging_current_options,
-                lambda r: r.max_charging_current,
-                commands.set_max_charging_current,
-            )
-        )
-    if identity.utility_charging_current_options:
-        descriptions.append(
-            _current_description(
-                "max_ac_charging_current",
-                identity.utility_charging_current_options,
-                lambda r: r.max_ac_charging_current,
-                commands.set_max_utility_charging_current,
-            )
-        )
+        
     if data.slow.data.rated.battery_rating_voltage == 24.0:
         descriptions += [_voltage_description(key) for key in commands.VOLTAGE_SETTINGS_24V]
     async_add_entities(VoltronicNumber(data.slow, d) for d in descriptions)

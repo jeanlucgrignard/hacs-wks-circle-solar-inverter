@@ -75,7 +75,40 @@ async def async_setup_entry(
     entry: VoltronicConfigEntry,
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
+
     data = entry.runtime_data
+  
+    current_settings = (
+        (
+            "max_charging_current",
+            data.identity.charging_current_options,
+            lambda d: d.rated.max_charging_current,
+            commands.set_max_charging_current,
+        ),
+        (
+            "max_ac_charging_current",
+            data.identity.utility_charging_current_options,
+            lambda d: d.rated.max_ac_charging_current,
+            commands.set_max_utility_charging_current,
+        ),
+    )
+    for key, options, read_current, build_command in current_settings:
+        if not options:
+            continue
+
+        description = VoltronicSelectDescription(
+            key=f"select_{key}",
+            translation_key=key,
+            entity_category=EntityCategory.CONFIG,
+            codes={amps: f"{amps} A" for amps in options},
+            code_fn=read_current,
+            command_fn=lambda amps, builder=build_command, allowed=options: builder(
+                amps, allowed
+            ),
+        )
+    
+        async_add_entities([VoltronicPrioritySelect(data.slow, description)])
+    
     async_add_entities(
         VoltronicPrioritySelect(data.slow, d) for d in SELECTS if is_supported(d, data.identity)
     )

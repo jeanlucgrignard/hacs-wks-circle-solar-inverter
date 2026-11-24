@@ -628,6 +628,12 @@
           "only_solar": "Only solar"
         }
       },
+      "max_charging_current": {
+        "name": "Max charging current"
+      },
+      "max_ac_charging_current": {
+        "name": "Max utility charging current"
+      },
       "battery_control": {
         "name": "Battery charge / discharge override",
         "state": {
@@ -702,12 +708,6 @@
       },
       "own_consumption_solar_charging": {
         "name": "Own consumption (output off, solar charging)"
-      },
-      "max_charging_current": {
-        "name": "Max charging current"
-      },
-      "max_ac_charging_current": {
-        "name": "Max utility charging current"
       },
       "battery_recharge_voltage": {
         "name": "Back to utility voltage"
