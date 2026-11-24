@@ -332,7 +332,7 @@
         "state": {
           "solar_first": "SUB (solar → utility → battery)",
           "sbu": "SBU (solar → battery → utility)",
-          "utility_first": "Utility first (unverified code)"
+          "utility_first": "Utility first (U → S → B)"
         },
         "state_attributes": {
           "code": {
@@ -358,7 +358,8 @@
         "state": {
           "agm": "AGM",
           "flooded": "Flooded",
-          "user_defined": "User-defined"
+          "user_defined": "User-defined",
+          "pylon": "Pylon"
         },
         "state_attributes": {
           "code": {
