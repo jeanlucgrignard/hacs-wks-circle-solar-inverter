@@ -124,6 +124,8 @@ REMOVED_NUMBER_KEYS = (
     "self_consumption_output_off",
     "number_max_discharging_current",
     "number_battery_discharge_current_limit",
+    "number_max_charging_current",
+    "number_max_ac_charging_current",    
 )
 
 
