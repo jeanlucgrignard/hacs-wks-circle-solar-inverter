@@ -445,7 +445,9 @@ def _clock_offset_breakdown(d: SlowData) -> Breakdown | None:
     offset = d.clock_offset
     if offset is None:
         return None
-    clock = d.generation.clock.replace(tzinfo=dt_util.get_default_time_zone())
+    clock = d.inverter_clock
+    if clock is None:
+        return None        
     return Breakdown(
         "round((inverter_clock - ha_time) in minutes)",
         {
@@ -466,17 +468,17 @@ EXTRA_SLOW_SENSORS: tuple[VoltronicSlowSensorDescription, ...] = (
     _pv_energy("pv_energy_month", lambda d: d.generation.pv_energy_month),
     _pv_energy("pv_energy_year", lambda d: d.generation.pv_energy_year),
     _pv_energy("pv_energy_total", lambda d: d.generation.pv_energy_total),
-    # Inverter clock (HGEN); the schedules follow this clock
+    # Inverter clock (HGEN) ????? HGEN JLG; the schedules follow this clock 
     _extra(
         "inverter_clock",
-        lambda d: d.generation.clock.replace(tzinfo=dt_util.get_default_time_zone()),
-        "generation",
+        lambda d: d.inverter_clock,
+        "inverter_clock",
         device_class=SensorDeviceClass.TIMESTAMP,
     ),
     _extra(
         "inverter_clock_offset",
         lambda d: d.clock_offset,
-        "generation",
+        "inverter_clock",
         state_class=SensorStateClass.MEASUREMENT,
         explain_fn=_clock_offset_breakdown,
         **_MINUTES,

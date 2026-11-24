@@ -53,13 +53,22 @@ class SlowData:
     generation: Generation | None = None
     temperatures: Temperatures | None = None
     second_output: bool | None = None  # HSTS[2] char 4: True = the second output is on
+    qt_clock: datetime | None = None
+
+    @property
+    def inverter_clock(self) -> datetime | None:
+        clock = self.generation.clock if self.generation is not None else self.qt_clock
+        if clock is None:
+            return None
+        return clock.replace(tzinfo=dt_util.get_default_time_zone())
 
     @property
     def clock_offset(self) -> int | None:
-        """Inverter clock minus HA time, in whole minutes (positive = inverter ahead)."""
-        if self.generation is None or self.fetched_at is None:
+        clock = self.inverter_clock
+        
+        if clock is None or self.fetched_at is None:
             return None
-        clock = self.generation.clock.replace(tzinfo=dt_util.get_default_time_zone())
+            
         return round((clock - self.fetched_at).total_seconds() / 60)
 
 
@@ -214,6 +223,16 @@ class VoltronicSlowCoordinator(_VoltronicCoordinator[SlowData]):
             generation = await self._optional(client.read_generation(), "generation")
             temperatures = await self._optional(client.read_temperatures(), "temperatures")
             second_output = await self._optional(client.read_second_output(), "second_output")
+        
+        qt_clock = None
+        if generation is None:
+            reply = await self._optional(client.query("QT"))
+            if reply is not None and len(reply) == 14 and reply.isascii() and reply.isdigit():
+                try:
+                    qt_clock = datetime.strptime(reply, "%Y%m%d%H%M%S")
+                except ValueError:
+                    LOGGER.debug("Invalid inverter clock response: %r", reply)
+
         return SlowData(
             rated=rated,
             flags=flags,
@@ -227,6 +246,7 @@ class VoltronicSlowCoordinator(_VoltronicCoordinator[SlowData]):
             generation=generation,
             temperatures=temperatures,
             second_output=second_output,
+            qt_clock=qt_clock,
         )
 
 
