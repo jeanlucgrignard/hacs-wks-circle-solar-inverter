@@ -1,0 +1,14 @@
+{
+  "domain": "wks_circle_solar_inverter",
+  "name": "WKS Circle Solar Inverter",
+  "codeowners": ["@jeanlucgrignard"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/jeanlucgrignard/hacs-wks_circle_solar_inverter",
+  "integration_type": "device",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/jeanlucgrignard/hacs-wks_circle_solar_inverter/issues",
+  "loggers": ["custom_components.wks_circle_solar_inverter"],
+  "requirements": [],
+  "version": "0.1.0"
+}

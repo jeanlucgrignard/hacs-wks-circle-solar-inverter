@@ -1,4 +1,4 @@
-"""Config and options flow for the Voltronic Solar Inverter integration."""
+"""Config and options flow for the WKS Circle Solar Inverter integration."""
 
 from __future__ import annotations
 

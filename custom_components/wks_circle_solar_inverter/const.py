@@ -1,14 +1,14 @@
-"""Constants for the Voltronic Solar Inverter integration."""
+"""Constants for the WKS Circle Solar Inverter integration."""
 
 from __future__ import annotations
 
 import logging
 from typing import Final
 
-DOMAIN: Final = "voltronic_solar_inverter"
+DOMAIN: Final = "wks_circle_solar_inverter"
 LOGGER = logging.getLogger(__package__)
 
-MANUFACTURER: Final = "Voltronic Power"
+MANUFACTURER: Final = "Wattuneed WKS "
 
 DEFAULT_PORT: Final = 8899
 
