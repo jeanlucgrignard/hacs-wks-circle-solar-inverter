@@ -8,7 +8,7 @@ from typing import Final
 DOMAIN: Final = "wks_circle_solar_inverter"
 LOGGER = logging.getLogger(__package__)
 
-MANUFACTURER: Final = "Wattuneed WKS "
+MANUFACTURER: Final = "Wattuneed WKS"
 
 DEFAULT_PORT: Final = 8899
 
